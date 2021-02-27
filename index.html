@@ -4,6 +4,22 @@
 <canvas width=600 height=400 id=c></canvas>
 </body>
 <script>
+function drawStar(ctx, x, y, w, h, fillStyle)
+{
+  ctx.fillStyle = fillStyle;
+  ctx.beginPath();
+  var starXY = [x,y];
+  var radius = w/2;
+  var alpha = (2 * Math.PI) / 10; 
+  for(var i = 11; i != 0; i--)
+  {
+      var r = radius*(i % 2 + 1)/2;
+      var omega = alpha * i;
+      ctx.lineTo((r * Math.sin(omega)) + starXY[0], (r * Math.cos(omega)) + starXY[1]);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
 var c1 = document.getElementById('c');
 var ctx = c1.getContext('2d');
 
@@ -15,6 +31,8 @@ ctx.fillStyle = 'white';
 ctx.fillRect(0, 0, w, h);
 //draw stripes
 var sh = h / num_stripes;
+var cw = 2/5 * w;
+var sd = 0.8 * sh;
 for(i = 0; i < num_stripes; i++)
 { 
   var sTop = i * sh;
@@ -28,6 +46,47 @@ for(i = 0; i < num_stripes; i++)
   }
   ctx.fillRect(0, sTop, w, sTop + sh );
 }
-//draw
+//draw ensign
+ctx.fillStyle = 'blue';
+ctx.fillRect(0, 0, cw, 7 * sh);
+//draw stars
+var NUM_STAR_ROWS = 5;
+var NUM_STAR_COLS = 5;
+for( i = 0; i < NUM_STAR_ROWS; ++i)
+{//row
+  for( j = 0; j < NUM_STAR_COLS; ++j )
+  {//column
+    if( j == 1 || j == 3 )
+    {
+      if( i == 2 )
+      {
+        continue;
+      }
+    }
+    var x = (i + 0.45) * (cw / NUM_STAR_COLS);
+    var y = (j + 0.45) * (7 * sh / NUM_STAR_ROWS);
+    drawStar( ctx, x, y , sd, sd, "white");
+  }
+}
+//draw island stars
+for( i = 0; i < 3; ++i )
+{
+  var x = i * sd * 2 + w * 7/10;
+  var y = 1.5 * sh;
+  drawStar( ctx, x, y, sd, sd, "black");
+}
+//draw island stars
+for( i = 1; i < 3; ++i )
+{
+  var x = i * sd * 2 + w * 7/10;
+  var y = 9.5 * sh;
+  drawStar( ctx, x, y, sd, sd, "black");
+}
+//draw text
+var text_y = 9.8 * sh;
+var text_x = 10;
+ctx.font = (sh * 0.9) + "px Arial Narrow";
+ctx.fillStyle = "black";
+ctx.fillText("MEN OTEMJEJ REJ ILO BEIN ANIJ", text_x, text_y);
 </script>
 </html>
