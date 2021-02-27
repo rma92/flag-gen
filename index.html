@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <body>
-<canvas width=600 height=400 id=c></canvas>
+<canvas width=1200 height=800 id=c></canvas>
 </body>
 <script>
 function drawStar(ctx, x, y, w, h, fillStyle)
@@ -20,13 +20,23 @@ function drawStar(ctx, x, y, w, h, fillStyle)
   ctx.closePath();
   ctx.fill();
 }
-var c1 = document.getElementById('c');
-var ctx = c1.getContext('2d');
 
 //config
-var h = 400;
-var w = 600;
 var num_stripes = 13;
+var w = 1200;
+var h = 800;
+var stripe1color = "#B22234"; //red flag in US
+var stripe2color = "#fff"; //white flag in US
+var ccolor = "#3C3B6E"; //color of box
+var scolor = "#fff"; //box star color
+var MHcolor = "#040"; //color of Bikini Atoll writing
+
+
+var c1 = document.getElementById('c');
+c1.width = w;
+c1.height = h;
+var ctx = c1.getContext('2d');
+
 ctx.fillStyle = 'white';
 ctx.fillRect(0, 0, w, h);
 //draw stripes
@@ -38,16 +48,16 @@ for(i = 0; i < num_stripes; i++)
   var sTop = i * sh;
   if( i % 2 )
   {
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = stripe2color;
   }
   else
   {
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = stripe1color;
   }
   ctx.fillRect(0, sTop, w, sTop + sh );
 }
 //draw ensign
-ctx.fillStyle = 'blue';
+ctx.fillStyle = ccolor;
 ctx.fillRect(0, 0, cw, 7 * sh);
 //draw stars
 var NUM_STAR_ROWS = 5;
@@ -65,7 +75,7 @@ for( i = 0; i < NUM_STAR_ROWS; ++i)
     }
     var x = (i + 0.45) * (cw / NUM_STAR_COLS);
     var y = (j + 0.45) * (7 * sh / NUM_STAR_ROWS);
-    drawStar( ctx, x, y , sd, sd, "white");
+    drawStar( ctx, x, y , sd, sd, scolor);
   }
 }
 //draw island stars
@@ -73,20 +83,20 @@ for( i = 0; i < 3; ++i )
 {
   var x = i * sd * 2 + w * 7/10;
   var y = 1.5 * sh;
-  drawStar( ctx, x, y, sd, sd, "black");
+  drawStar( ctx, x, y, sd, sd, MHcolor);
 }
 //draw island stars
 for( i = 1; i < 3; ++i )
 {
   var x = i * sd * 2 + w * 7/10;
   var y = 9.5 * sh;
-  drawStar( ctx, x, y, sd, sd, "black");
+  drawStar( ctx, x, y, sd, sd, MHcolor);
 }
 //draw text
 var text_y = 9.8 * sh;
 var text_x = 10;
 ctx.font = (sh * 0.9) + "px Arial Narrow";
-ctx.fillStyle = "black";
+ctx.fillStyle = MHcolor;
 ctx.fillText("MEN OTEMJEJ REJ ILO BEIN ANIJ", text_x, text_y);
 </script>
 </html>
