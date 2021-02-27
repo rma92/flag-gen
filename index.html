@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<canvas width=600 height=400 id=c></canvas>
+</body>
+<script>
+var c1 = document.getElementById('c');
+var ctx = c1.getContext('2d');
+
+//config
+var h = 400;
+var w = 600;
+var num_stripes = 13;
+ctx.fillStyle = 'white';
+ctx.fillRect(0, 0, w, h);
+//draw stripes
+var sh = h / num_stripes;
+for(i = 0; i < num_stripes; i++)
+{ 
+  var sTop = i * sh;
+  if( i % 2 )
+  {
+    ctx.fillStyle = 'white';
+  }
+  else
+  {
+    ctx.fillStyle = 'red';
+  }
+  ctx.fillRect(0, sTop, w, sTop + sh );
+}
+//draw
+</script>
+</html>
