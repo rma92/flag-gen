@@ -4,18 +4,19 @@
 <canvas width=1200 height=800 id=c></canvas>
 </body>
 <script>
+//x y is top left corner.
 function drawStar(ctx, x, y, w, h, fillStyle)
 {
   ctx.fillStyle = fillStyle;
   ctx.beginPath();
-  var starXY = [x,y];
-  var radius = w/2;
-  var alpha = (2 * Math.PI) / 10; 
-  for(var i = 11; i != 0; i--)
+  var pts = [ [.5 * w + x, y],
+              [5/6 * w + x, y + h],
+              [x, y + 5/12 * h],
+              [x + w, y + 5/12 * h],
+              [1/6 * w + x, y + h] ];
+  for( var i = 0; i < 5; ++i )
   {
-      var r = radius*(i % 2 + 1)/2;
-      var omega = alpha * i;
-      ctx.lineTo((r * Math.sin(omega)) + starXY[0], (r * Math.cos(omega)) + starXY[1]);
+    ctx.lineTo( pts[i][0], pts[i][1] );
   }
   ctx.closePath();
   ctx.fill();
@@ -23,8 +24,8 @@ function drawStar(ctx, x, y, w, h, fillStyle)
 
 //config
 var num_stripes = 13;
-var w = 1200;
-var h = 800;
+var w = 2400;
+var h = 1600;
 var stripe1color = "#B22234"; //red flag in US
 var stripe2color = "#fff"; //white flag in US
 var ccolor = "#3C3B6E"; //color of box
@@ -73,8 +74,8 @@ for( i = 0; i < NUM_STAR_ROWS; ++i)
         continue;
       }
     }
-    var x = (i + 0.45) * (cw / NUM_STAR_COLS);
-    var y = (j + 0.45) * (7 * sh / NUM_STAR_ROWS);
+    var x = (i + 0.24) * (cw / NUM_STAR_COLS);
+    var y = (j + 0.21) * (7 * sh / NUM_STAR_ROWS);
     drawStar( ctx, x, y , sd, sd, scolor);
   }
 }
@@ -82,20 +83,20 @@ for( i = 0; i < NUM_STAR_ROWS; ++i)
 for( i = 0; i < 3; ++i )
 {
   var x = i * sd * 2 + w * 7/10;
-  var y = 1.5 * sh;
+  var y = 1.1 * sh;
   drawStar( ctx, x, y, sd, sd, MHcolor);
 }
 //draw island stars
 for( i = 1; i < 3; ++i )
 {
   var x = i * sd * 2 + w * 7/10;
-  var y = 9.5 * sh;
+  var y = 9.1 * sh;
   drawStar( ctx, x, y, sd, sd, MHcolor);
 }
 //draw text
 var text_y = 9.8 * sh;
 var text_x = 10;
-ctx.font = (sh * 0.9) + "px Arial Narrow";
+ctx.font = "bold " + (sh * 0.9) + "px Arial Narrow";
 ctx.fillStyle = MHcolor;
 ctx.fillText("MEN OTEMJEJ REJ ILO BEIN ANIJ", text_x, text_y);
 </script>
